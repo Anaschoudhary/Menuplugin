@@ -27,7 +27,7 @@ class MenuController extends BaseController{
         $menu = $option[$name];
         
       
-        if ($args->menu->slug == $menu ) { // change your menu slug name
+        if ($args->menu->slug == $menu ) { // change your menu slug nam
     
             // Add your html
             $categories = get_categories();

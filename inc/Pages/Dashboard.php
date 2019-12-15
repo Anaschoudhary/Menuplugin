@@ -57,8 +57,8 @@ class Dashboard extends BaseController{
 
             $args[] =  array(
                     'option_group' => 'extramenu_plugin_settings',
-                    'option_name' => 'extramenu_plugin',
-                    'callback' => array($this->callbacks_mngr, 'checkboxSanitize' )
+                    'option_name' => 'extramenu_plugin'
+                    //'callback' => array($this->callbacks_mngr, 'checkboxSanitize' )
             );
        
         $this->settings->setSettings( $args );
@@ -71,8 +71,14 @@ class Dashboard extends BaseController{
 
             array(
                 'id' => 'extramenu_plugin_index',
-                'title' => 'Settings Manager',
+                'title' => 'Setting',
                 'callback' => array($this->callbacks_mngr, 'adminSectionManager' ),
+                'page' => 'extramenu_plugin'
+            ),
+            array(
+                'id' => 'extramenu_plugin_select_category',
+                'title' => 'Select Categories',
+                'callback' => array($this->callbacks_mngr, 'adminCategorySection' ),
                 'page' => 'extramenu_plugin'
             )       
         );
@@ -84,22 +90,52 @@ class Dashboard extends BaseController{
 
         $args = array();
 
-        foreach ($this->managers as $key => $value){
+            $args[] =  array(
+    
+                'id' => 'extra_menu_manager',
+                'title' => 'Menu Slug',
+                'callback' => array($this->callbacks_mngr, 'checkboxField' ),
+                'page' => 'extramenu_plugin',
+                'section' => 'extramenu_plugin_index',
+                'args' => array(
+                    'option_name' => 'extramenu_plugin', // can give any name in place of 'option_name'
+                    'label_for' => 'extra_menu_manager',
+                    'class' => 'ui-toggle'
+                )
+            );
 
-            $args[] =   array(
+            $args[] =  array(
+    
+                'id' => 'extra_menu_text',
+                'title' => 'Menu text',
+                'callback' => array($this->callbacks_mngr, 'menu_text' ),
+                'page' => 'extramenu_plugin',
+                'section' => 'extramenu_plugin_index',
+                'args' => array(
+                    'option_name' => 'extramenu_plugin', // can give any name in place of 'option_name'
+                    'label_for' => 'extra_menu_text',
+                    'class' => 'ui-toggle'
+                )
+            );
 
-                    'id' => $key,
-                    'title' => $value,
-                    'callback' => array($this->callbacks_mngr, 'checkboxField' ),
+                $categories = get_categories();
+
+                foreach($categories as $category){
+
+                $args[] = array(
+
+                    'id' => $category->slug,
+                    'title' => $category->name,
+                    'callback' => array($this->callbacks_mngr, 'allcategories' ),
                     'page' => 'extramenu_plugin',
-                    'section' => 'extramenu_plugin_index',
+                    'section' => 'extramenu_plugin_select_category',
                     'args' => array(
                         'option_name' => 'extramenu_plugin', // can give any name in place of 'option_name'
-                        'label_for' => $key,
+                        'label_for' => $category->slug,
                         'class' => 'ui-toggle'
                         )
                     );
-        }
+                }
 
         $this->settings->setFields( $args );
     }

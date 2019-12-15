@@ -24,15 +24,16 @@ class MenuController extends BaseController{
         $name = 'extra_menu_manager';
         $option_name = 'extramenu_plugin';
         $option = get_option($option_name);
+        $menu_text = $option['extra_menu_text'];
         $menu = $option[$name];
         
       
-        if ($args->menu->slug == $menu ) { // change your menu slug nam
+        if ($args->menu->slug == $menu ) { // change your menu slug name
     
             // Add your html
             $categories = get_categories();
             $item = '';
-            $item .='<li  class="menu-item "><a href="#">ExtraMenu<svg class="icon icon-angle-down" aria-hidden="true" role="img"> <use href="#icon-angle-down" xlink:href="#icon-angle-down"></use> </svg></a><button class="dropdown-toggle" aria-expanded="false"><svg class="icon icon-angle-down" aria-hidden="true" role="img"> <use href="#icon-angle-down" xlink:href="#icon-angle-down"></use> <span class="svg-fallback icon-angle-down"></span></svg></button>';
+            $item .='<li  class="menu-item "><a href="#">'.$menu_text.'<svg class="icon icon-angle-down" aria-hidden="true" role="img"> <use href="#icon-angle-down" xlink:href="#icon-angle-down"></use> </svg></a><button class="dropdown-toggle" aria-expanded="false"><svg class="icon icon-angle-down" aria-hidden="true" role="img"> <use href="#icon-angle-down" xlink:href="#icon-angle-down"></use> <span class="svg-fallback icon-angle-down"></span></svg></button>';
             $item .= '<ul class="sub-menu">';
             
             foreach($categories as $category) {

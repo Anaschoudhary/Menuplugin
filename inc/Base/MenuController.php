@@ -10,7 +10,6 @@ namespace Inc\Base;
 
 use \Inc\Base\BaseController;
 
-
 class MenuController extends BaseController{
 
     public function register(){
@@ -53,7 +52,7 @@ class MenuController extends BaseController{
 
                 while( $posts->have_posts() ) : $posts->the_post();
                     $post_title = get_the_title();
-                    $item .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="#">';
+                    $item .= '<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="'.get_post_permalink().'">';
 
                     $item .= $post_title;
                     $item .= '</a></li>';
